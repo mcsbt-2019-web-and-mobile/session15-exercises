@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/theme/beige.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/print/pdf.css' : 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="section" class="level1">
+<h1></h1>
+<section id="session-15" class="level2">
+<h2>Session 15</h2>
+</section>
+</section>
+<section id="section-1" class="level1">
+<h1></h1>
+<section id="plan-for-today" class="level2">
+<h2>Plan for today</h2>
+<ul>
+<li>scraping</li>
+<li>explain individual assignment</li>
+</ul>
+</section>
+</section>
+<section id="section-2" class="level1">
+<h1></h1>
+<section id="scraping" class="level2">
+<h2>Scraping</h2>
+<p>Scraping is the process of extracting data from webpages automatically.</p>
+</section>
+<section id="scrapy-lib" class="level2">
+<h2>scrapy lib</h2>
+<p>in our examples we'll be using python's scrapy library:</p>
+<p><code>pip3 install scrapy</code></p>
+</section>
+<section id="scrapy-terminology" class="level2">
+<h2>scrapy terminology</h2>
+<p>Scrapy uses the term <code>Spider</code> to refer to classes that know how to scrap data from a particular webiste.</p>
+</section>
+<section id="creating-our-first-spyder" class="level2">
+<h2>Creating our first Spyder</h2>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> scrapy
+
+<span class="kw">class</span> HackerNewsSpider(scrapy.Spider):
+    name <span class="op">=</span> <span class="st">&quot;hacker news&quot;</span>
+
+    <span class="kw">def</span> start_requests(<span class="va">self</span>):
+        url <span class="op">=</span> <span class="st">&#39;https://news.ycombinator.com&#39;</span>
+        <span class="cf">return</span> [scrapy.Request(url<span class="op">=</span>url, callback<span class="op">=</span><span class="va">self</span>.parse)]
+
+    <span class="kw">def</span> parse(<span class="va">self</span>, response):
+        <span class="co"># in this method we do our magic</span>
+        <span class="cf">pass</span></code></pre></div>
+</section>
+<section id="creating-our-first-spyder-1" class="level2">
+<h2>Creating our first Spyder</h2>
+<p>the important bit in the last example is the <code>start_request</code> method. That's the method that tells scrapy which URLs to crawl(<strong>url=url</strong>), and how to handle the response (<strong>callback=self.parse</strong>).</p>
+</section>
+<section id="parsing-the-response" class="level2">
+<h2>parsing the response</h2>
+<p>When a request is done in scrapy, the callback is executed, pasing the response to it. Once the callback is executed (the <code>parse</code> method in our previous example), we can access information from the response using different techniques.</p>
+<ul>
+<li>xpath</li>
+<li>css</li>
+</ul>
+</section>
+<section id="css-selectors-remember-css-dinner" class="level2">
+<h2>CSS selectors (remember CSS dinner?)</h2>
+<p>the following block is printing out the text inside all <code>a</code> tags with the <code>link</code> class.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">...
+<span class="kw">def</span> parse(<span class="va">self</span>, response):
+    <span class="cf">for</span> link <span class="kw">in</span> response.css(<span class="st">&#39;a.link::text&#39;</span>):
+        <span class="bu">print</span>(a.get())
+...     </code></pre></div>
+</section>
+<section id="example1" class="level2">
+<h2>Example1</h2>
+<p>See the <code>hackernews</code> folder for an example spider that gets the frontpage of hackernews and just prints the outputs.</p>
+</section>
+<section id="more-interesting-stuff" class="level2">
+<h2>more interesting stuff</h2>
+<p>What else could we do with scraping? The normal approach for scrapping applications is getting data from the web and storing it somewhere for later use. This somewhere may be a CSV file, database, etc.</p>
+</section>
+<section id="saving-data-from-a-webpage-to-a-csv-file" class="level2">
+<h2>saving data from a webpage to a CSV file</h2>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> parse(<span class="va">self</span>, response):
+    rows <span class="op">=</span> []
+    <span class="cf">for</span> row <span class="kw">in</span> response.css(<span class="st">&#39;.card-product-product-info&#39;</span>):
+        title <span class="op">=</span> row.css(<span class="st">&#39;.product-info-title::text&#39;</span>).get().strip()
+        price <span class="op">=</span> row.css(<span class="st">&#39;.product-info-price::text&#39;</span>).get().strip()
+        rows.append({
+            <span class="st">&#39;title&#39;</span>: title,
+            <span class="st">&#39;price&#39;</span>: price
+        })
+    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;data.csv&#39;</span>, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> csvfile:
+        fieldnames <span class="op">=</span> [<span class="st">&#39;title&#39;</span>, <span class="st">&#39;price&#39;</span>]
+        writer <span class="op">=</span> csv.DictWriter(csvfile, fieldnames<span class="op">=</span>fieldnames)
+        writer.writeheader()
+        <span class="cf">for</span> row <span class="kw">in</span> rows:
+            writer.writerow(row)</code></pre></div>
+</section>
+<section id="example2" class="level2">
+<h2>Example2</h2>
+<p>See the <code>wallapop</code> folder for an example spider that gets the frontpage of wallapop and stores the classified ads in a CSV file.</p>
+</section>
+</section>
+<section id="section-3" class="level1">
+<h1></h1>
+<section id="interlude-individual-assignment-2" class="level2">
+<h2>Interlude: Individual assignment 2</h2>
+<p>You're asked to create a service that allows users to keep track of the analytics in their websites (think of Google Analytics).</p>
+<p>All analytics must be stored in a SQLite database.</p>
+</section>
+<section id="exercise" class="level2">
+<h2>Exercise</h2>
+<p>Create a scraper for fotocasa.com that gets the data first page and then saves the data to a CSV file</p>
+</section>
+</section>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/lib/js/head.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Transition style
+        transition: 'linear', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/plugin/zoom-js/zoom.js', async: true },
+              { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
